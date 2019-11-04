@@ -62,9 +62,12 @@ public class PlayBoard {
 			Integer playerBoardPosition = findPlayerPosition(p);
 			Integer conta = x + y;
 			Integer playerNextPosition = calculatePosition(playerBoardPosition, conta);
+			Boolean bouncing =playerBoardPosition+ conta <= 63 ? false:true;
 			Sqaure nextsqare = board[playerNextPosition] != null ? board[playerNextPosition] : new CommonSquare();
 			result = p.getName() + " rolls " + x + ", " + y +". " + p.getName() + " moves from "
-			+ (playerBoardPosition!=0?playerBoardPosition:"StartSqaure") + " to " + playerNextPosition+", " ;
+			+ (playerBoardPosition!=0?playerBoardPosition:"StartSqaure") + " to " + (bouncing? 63: playerNextPosition)+". " 
+					+ (bouncing? p.getName() +" bounces! "+ p.getName()+" returns to "+playerNextPosition :"");
+
 			
 			if (nextsqare instanceof CommonSquare) {
 				result+=moveCommon(nextsqare, playerNextPosition, playerBoardPosition, p);
@@ -213,14 +216,14 @@ public class PlayBoard {
 		if (playerposition + playmove <= benchmark)
 			return playerposition + playmove;
 		else
-			return benchmark - playmove;
+			return benchmark - ((playerposition + playmove) -benchmark);
 
 	}
 
 	public String movePlayer(String nome) {
 		Random rand = new Random();
-		int x = rand.nextInt(9) +1;
-		int y = rand.nextInt(9) +1;
+		int x = rand.nextInt(5) +1;
+		int y = rand.nextInt(5) +1;
 		return movePlayer(nome, x, y);
 	}
 

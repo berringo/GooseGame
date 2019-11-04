@@ -16,7 +16,7 @@ public class Application implements CommandLineRunner  {
 		PlayBoard pb=new PlayBoard();
 		System.out.println("welcome to the Goose Game!");
 		System.out.println("usage: add a player usign command 'add player xxx'");
-		System.out.println("     : move a player usign command 'move xxx 1 1' or command 'move xxx'");
+		System.out.println("     : move a player usign command 'move xxx 1 1' using two positive integers between 1 and 6, or use command 'move xxx'");
 		System.out.println("     : to quit type 'exit'");
 		while(input.hasNextLine()) {
 			String stringa = input.nextLine();
@@ -27,9 +27,22 @@ public class Application implements CommandLineRunner  {
 			}
 			
 			if (inputConsole.length ==4 && inputConsole[0].equalsIgnoreCase("move")) {
-				System.out.println(pb.movePlayer(inputConsole[1], Integer.parseInt(inputConsole[2]), Integer.parseInt(inputConsole[3])));
-				if(pb.endGame)
-					System.exit(1);
+				try {
+				Integer x=Integer.parseInt(inputConsole[2]);
+				Integer y=Integer.parseInt(inputConsole[3]);
+				
+				if(x<=5 && y<=5) {
+					System.out.println(pb.movePlayer(inputConsole[1],x, y));
+					if(pb.endGame)
+						System.exit(1);	
+				}else {
+					System.out.println("please use valid numbers");
+				}
+				}
+				catch (NumberFormatException e) {
+//					System.err.println(e.getMessage());
+					System.out.println("please use valid numbers");
+				}
 			}
 			
 			if (inputConsole.length ==2 && inputConsole[0].equalsIgnoreCase("move")) {

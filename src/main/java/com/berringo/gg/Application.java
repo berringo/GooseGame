@@ -16,7 +16,7 @@ public class Application implements CommandLineRunner  {
 		PlayBoard pb=new PlayBoard();
 		System.out.println("welcome to the Goose Game!");
 		System.out.println("usage: add a player usign command 'add player xxx'");
-		System.out.println("     : move a player usign command 'move xxx 1 1' using two positive integers between 1 and 6, or use command 'move xxx'");
+		System.out.println("     : move a player usign command 'move xxx 1 1' using two positive integers between 1 and 5, or use command 'move xxx'");
 		System.out.println("     : to quit type 'exit'");
 		while(input.hasNextLine()) {
 			String stringa = input.nextLine();

@@ -1,27 +1,38 @@
 package com.berringo.gg.domain;
 
-public class CommonSquare extends Square {
+import java.util.Set;
+import java.util.TreeSet;
 
-	public CommonSquare(Player player) {
-		super();
-		if(isAvailableSqlare())
-			this.player = player;
+public class StartSquare extends Square{
+	private Set<Player> players=new TreeSet<Player>();
+
+	public Set<Player> getPlayers() {
+		return players;
 	}
 
-	public CommonSquare() {
+	public void setPlayers(Set<Player> players) {
+		this.players = players;
 	}
 
-	public CommonSquare(Integer playerNextPosition) {
-		this.setSquareNumber(playerNextPosition);
-	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
+	@Override
+	public String toString() {
+		String playersname=!this.players.isEmpty()? players.toString(): " No players in Start Square" ;
+		return "StartSquare" +playersname;
 	} 
+	
+//	@Override
+//	public Square move(int conta, Player p, Square[] board) {
+//		Integer playerBoardPosition =findPlayerPosition(p, board);
+//		Integer playerNextPosition =  calculatePosition(playerBoardPosition, conta);
+//		Square nextsqare = board[playerNextPosition] != null ? board[playerNextPosition] : new CommonSquare();
+//		result="";
+//		nextsqare=nextsqare.move(conta, p, board);
+//		result+=nextsqare.getResult();
+//
+//		nextsqare.setResult(result);
+//		return nextsqare;
+//	}
+	
 	
 	@Override
 	public Square move(int conta, Player p, Square[] board) {
@@ -48,6 +59,8 @@ public class CommonSquare extends Square {
 			result+=prankMove(nextsqare, playerBoardPosition, playerNextPosition, p,board);
 		}
 		nextsqare.setResult(result);
+		
+		
 		return nextsqare;
 	}
 }

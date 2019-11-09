@@ -1,27 +1,24 @@
 package com.berringo.gg.domain;
 
-public class CommonSquare extends Square {
+public class GooseSquare extends Square {
 
-	public CommonSquare(Player player) {
+	private String mesageResult="";
+	
+	public GooseSquare(Player player) {
 		super();
 		if(isAvailableSqlare())
 			this.player = player;
 	}
 
-	public CommonSquare() {
+	public GooseSquare() {
+		super();
 	}
 
-	public CommonSquare(Integer playerNextPosition) {
-		this.setSquareNumber(playerNextPosition);
+	public GooseSquare(Integer integer) {
+	this.setSquareNumber(integer);
 	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
-	} 
+	
+	
 	
 	@Override
 	public Square move(int conta, Player p, Square[] board) {
@@ -29,11 +26,10 @@ public class CommonSquare extends Square {
 		Integer playerBoardPosition =findPlayerPosition(p, board);
 		Integer playerNextPosition =  calculatePosition(playerBoardPosition, conta);
 		Square nextsqare = board[playerNextPosition] != null ? board[playerNextPosition] : new CommonSquare();
-		Boolean bouncing =playerBoardPosition+ conta <= 63 ? false:true;
-		result = (playerBoardPosition!=0?playerBoardPosition:"StartSqaure") + " to " + (bouncing? 63: playerNextPosition)+". " 
-				+ (bouncing? p.getName() +" bounces! "+ p.getName()+" returns to "+playerNextPosition :"");
-		
-//		String result ="";
+
+		if(mesageResult.isEmpty())
+			mesageResult += (playerBoardPosition!=0?playerBoardPosition:"StartSqaure") + " to " +  playerNextPosition ;
+			
 		if (nextsqare.isAvailableSqlare()) {
 			nextsqare.setPlayer(p);
 			nextsqare.setSquareNumber(playerNextPosition);
@@ -41,13 +37,22 @@ public class CommonSquare extends Square {
 				StartSquare s = (StartSquare) board[playerBoardPosition];
 				s.getPlayers().remove(p);
 			}
+			mesageResult +=  ", The Goose. " + p.getName()+ " moves again and goes to " + playerNextPosition;
 			board[playerNextPosition] = nextsqare;
 			board[playerBoardPosition].removePlayer();
 			
 		} else {
-			result+=prankMove(nextsqare, playerBoardPosition, playerNextPosition, p,board);
+			mesageResult +=  "The Goose. " + p.getName()+ " moves again and goes to " + playerNextPosition;
+			mesageResult+=prankMove(nextsqare, playerNextPosition, playerNextPosition, p,board);
 		}
-		nextsqare.setResult(result);
+		
+		if(nextsqare instanceof GooseSquare) {
+			move(conta, p, board).getResult();
+		}
+				
+		nextsqare.setResult(mesageResult);
 		return nextsqare;
+	
 	}
+
 }

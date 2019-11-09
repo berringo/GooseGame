@@ -2,14 +2,12 @@ package com.berringo.gg;
 
 import java.util.Scanner;
 
-import org.springframework.boot.CommandLineRunner;
-
 import com.berringo.gg.domain.Player;
 
 //@SpringBootApplication
 //@Configuration
 //@EnableAutoConfiguration
-public class Application implements CommandLineRunner  {
+public class Application {
 	
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
@@ -31,12 +29,12 @@ public class Application implements CommandLineRunner  {
 				Integer x=Integer.parseInt(inputConsole[2]);
 				Integer y=Integer.parseInt(inputConsole[3]);
 				
-				if(x<=5 && y<=5) {
+				if(x>0 && x<=5 && y>0 &&y<=5) {
 					System.out.println(pb.movePlayer(inputConsole[1],x, y));
 					if(pb.endGame)
 						System.exit(1);	
 				}else {
-					System.out.println("please use valid numbers");
+					System.out.println("please use valid numbers between 1 and 5");
 				}
 				}
 				catch (NumberFormatException e) {
@@ -60,30 +58,6 @@ public class Application implements CommandLineRunner  {
 				System.exit(1);
 			}
 		}
-	}
-
-		
-	@Override
-    public void run(String... strings) throws Exception {
-		Scanner input = new Scanner(System.in);
-		PlayBoard pb=new PlayBoard();
-		while(input.hasNextLine()) {
-			String stringa = input.nextLine();
-			System.out.println("stringa-->"+stringa);
-			
-			String[] inputConsole = stringa.split(" ");
-			
-			if (inputConsole.length >=3 && inputConsole[0].equalsIgnoreCase("add")) {
-				System.out.println(pb.addPlayer(new Player(inputConsole[2])));
-			}
-					
-			if(input.next().equalsIgnoreCase("exit")) {
-				input.close();
-				System.exit(1);
-			
-			}
-		}
-		
 	}
 
 }

@@ -1,8 +1,7 @@
 package com.berringo.gg.domain;
 
 public class GooseSquare extends Square {
-
-	private String mesageResult="";
+//	String mesageResult="";
 	
 	public GooseSquare(Player player) {
 		super();
@@ -15,10 +14,8 @@ public class GooseSquare extends Square {
 	}
 
 	public GooseSquare(Integer integer) {
-	this.setSquareNumber(integer);
+		this.setSquareNumber(integer);
 	}
-	
-	
 	
 	@Override
 	public Square move(int conta, Player p, Square[] board) {
@@ -26,9 +23,9 @@ public class GooseSquare extends Square {
 		Integer playerBoardPosition =findPlayerPosition(p, board);
 		Integer playerNextPosition =  calculatePosition(playerBoardPosition, conta);
 		Square nextsqare = board[playerNextPosition] != null ? board[playerNextPosition] : new CommonSquare();
-
-		if(mesageResult.isEmpty())
-			mesageResult += (playerBoardPosition!=0?playerBoardPosition:"StartSqaure") + " to " +  playerNextPosition ;
+		
+		if(result.isEmpty())
+			result += (playerBoardPosition!=0?playerBoardPosition:"StartSqaure") + " to " +  playerNextPosition ;
 			
 		if (nextsqare.isAvailableSqlare()) {
 			nextsqare.setPlayer(p);
@@ -37,20 +34,20 @@ public class GooseSquare extends Square {
 				StartSquare s = (StartSquare) board[playerBoardPosition];
 				s.getPlayers().remove(p);
 			}
-			mesageResult +=  ", The Goose. " + p.getName()+ " moves again and goes to " + playerNextPosition;
+			
 			board[playerNextPosition] = nextsqare;
 			board[playerBoardPosition].removePlayer();
 			
 		} else {
-			mesageResult +=  "The Goose. " + p.getName()+ " moves again and goes to " + playerNextPosition;
-			mesageResult+=prankMove(nextsqare, playerNextPosition, playerNextPosition, p,board);
+			result+=prankMove(nextsqare, playerBoardPosition, playerNextPosition, p,board);
 		}
 		
 		if(nextsqare instanceof GooseSquare) {
+			result +=  ", The Goose. " + p.getName()+ " moves again and goes to " + (playerNextPosition+conta);
 			move(conta, p, board).getResult();
 		}
 				
-		nextsqare.setResult(mesageResult);
+		nextsqare.setResult(result);
 		return nextsqare;
 	
 	}

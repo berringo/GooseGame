@@ -32,15 +32,15 @@ public class PlayBoard {
 	}
 
 	public void init() {
-		board[0] = new StartSquare();
-		board[63] = new FinalSquare();
-		board[6] = new BridgeSquare();
-		board[5] = new GooseSquare();
-		board[9] = new GooseSquare();
-		board[14] = new GooseSquare();
-		board[18] = new GooseSquare();
-		board[23] = new GooseSquare();
-		board[27] = new GooseSquare();
+		board[0] = new StartSquare(0);
+		board[63] = new FinalSquare(63);
+		board[6] = new BridgeSquare(6);
+		board[5] = new GooseSquare(5);
+		board[9] = new GooseSquare(9);
+		board[14] = new GooseSquare(14);
+		board[18] = new GooseSquare(18);
+		board[23] = new GooseSquare(23);
+		board[27] = new GooseSquare(27);
 	}
 
 	public Set<Player> getPlayers() {
@@ -69,12 +69,14 @@ public class PlayBoard {
 			Integer conta = x + y;
 			
 			Square nextsqare=getNextSqaure(board[0], conta, p);
+			nextsqare.setResult("");
 			nextsqare=nextsqare.move(conta, p,board);
 			
 			if (nextsqare instanceof FinalSquare) {
 				endGame = true;
 			}
 			result+=nextsqare.getResult();
+			nextsqare.setResult("");
 		} else {
 			result = nome + " does not exixst as a player";
 		}
@@ -88,8 +90,6 @@ public class PlayBoard {
 				System.out.println(board[i].toString());
 		}
 	}
-
-	
 
 	public Player findPlayer(String p) {
 		Optional<Player> risultato = players.stream().filter(x -> {
@@ -115,6 +115,4 @@ public class PlayBoard {
 		Square nextsqare = board[playerNextPosition] != null ? board[playerNextPosition] : new CommonSquare();
 		return nextsqare;
 	}
-	
-	
 }

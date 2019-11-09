@@ -6,6 +6,10 @@ import java.util.TreeSet;
 public class StartSquare extends Square{
 	private Set<Player> players=new TreeSet<Player>();
 
+	public StartSquare(Integer i) {
+		this.setSquareNumber(i);
+	}
+
 	public Set<Player> getPlayers() {
 		return players;
 	}

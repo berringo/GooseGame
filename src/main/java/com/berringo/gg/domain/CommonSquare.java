@@ -31,21 +31,23 @@ public class CommonSquare extends Square {
 		Square nextsqare = board[playerNextPosition] != null ? board[playerNextPosition] : new CommonSquare();
 		Boolean bouncing =playerBoardPosition+ conta <= 63 ? false:true;
 		result = (playerBoardPosition!=0?playerBoardPosition:"StartSqaure") + " to " + (bouncing? 63: playerNextPosition)+". " 
-				+ (bouncing? p.getName() +" bounces! "+ p.getName()+" returns to "+playerNextPosition :"");
+				+ (bouncing? p.getName() +" bounces! "+ p.getName()+" returns to "+playerNextPosition :"");		
 		
 //		String result ="";
-		if (nextsqare.isAvailableSqlare()) {
+		if (!nextsqare.isAvailableSqlare()&&!p.equals(nextsqare.getPlayer())) {
+			result+=prankMove(nextsqare, playerBoardPosition, playerNextPosition, p,board);
+		} else {
 			nextsqare.setPlayer(p);
 			nextsqare.setSquareNumber(playerNextPosition);
 			if (playerBoardPosition == 0) {
 				StartSquare s = (StartSquare) board[playerBoardPosition];
 				s.getPlayers().remove(p);
 			}
-			board[playerNextPosition] = nextsqare;
-			board[playerBoardPosition].removePlayer();
+			if(playerBoardPosition!=playerNextPosition) {
+				board[playerBoardPosition].removePlayer();
+				board[playerNextPosition] = nextsqare;
+			}
 			
-		} else {
-			result+=prankMove(nextsqare, playerBoardPosition, playerNextPosition, p,board);
 		}
 		nextsqare.setResult(result);
 		return nextsqare;
